@@ -27,6 +27,7 @@ __version__ = "1.0.0"
 
 __revision__ = "$LastChangedRevision$"
 """ The revision number of the module """
+
 __date__ = "$LastChangedDate$"
 """ The last change date of the module """
 
