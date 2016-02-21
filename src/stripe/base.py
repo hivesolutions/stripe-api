@@ -39,13 +39,18 @@ __license__ = "Apache License, Version 2.0"
 
 import appier
 
+from . import charge
 from . import balance
 
 BASE_URL = "https://api.stripe.com/v1/"
 """ The default base url to be used when no other
 base url value is provided to the constructor """
 
-class Api(appier.Api, balance.BalanceApi):
+class Api(
+    appier.Api,
+    charge.ChargeApi,
+    balance.BalanceApi
+):
 
     def __init__(self, *args, **kwargs):
         appier.OAuth1Api.__init__(self, *args, **kwargs)
