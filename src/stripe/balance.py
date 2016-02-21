@@ -37,18 +37,9 @@ __copyright__ = "Copyright (c) 2008-2016 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
-import appier
+class BalanceApi(object):
 
-from . import balance
-
-BASE_URL = "https://api.stripe.com/v1/"
-""" The default base url to be used when no other
-base url value is provided to the constructor """
-
-class Api(appier.Api, balance.BalanceApi):
-
-    def __init__(self, *args, **kwargs):
-        appier.OAuth1Api.__init__(self, *args, **kwargs)
-        self.api_key = appier.conf("STRIPE_API_KEY", None)
-        self.base_url = kwargs.get("base_url", BASE_URL)
-        self.api_key = kwargs.get("api_key", self.api_key)
+    def get_balance(self):
+        url = self.base_url + "balance"
+        contents = self.get(url)
+        return contents

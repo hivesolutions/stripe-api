@@ -34,6 +34,8 @@ __copyright__ = "Copyright (c) 2008-2016 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
+from . import balance
 from . import base
 
+from .balance import BalanceApi
 from .base import BASE_URL, Api
