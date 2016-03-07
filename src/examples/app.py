@@ -73,6 +73,19 @@ class StripeApp(appier.WebApp):
         )
         return balance
 
+    @appier.route("/charges/new", "GET")
+    def new_charge(self):
+        amount = self.field("amount", 100, cast = int)
+        currency = self.field("currency", "EUR")
+        exp_month = self.field("exp_month", 1)
+        exp_year = self.field("exp_year", 2020)
+        number = self.field("number", 4242424242424242)
+        api = self.get_api()
+        balance = api.create_charge(
+            amount, currency, exp_month, exp_year, number
+        )
+        return balance
+
     def get_api(self):
         return base.get_api()
 
