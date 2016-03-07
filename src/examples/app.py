@@ -86,6 +86,12 @@ class StripeApp(appier.WebApp):
         )
         return balance
 
+    @appier.route("/charges/<str:id>", "GET")
+    def get_charge(self, id):
+        api = self.get_api()
+        charge = api.get_charge(id)
+        return charge
+
     def get_api(self):
         return base.get_api()
 
