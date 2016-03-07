@@ -56,6 +56,23 @@ class StripeApp(appier.WebApp):
         balance = api.get_balance()
         return balance
 
+    @appier.route("/customers/new", "GET")
+    def new_customer(self):
+        api = self.get_api()
+        balance = api.create_customer()
+        return balance
+
+    @appier.route("/customers/<str:id>/card/new", "GET")
+    def new_card_customer(self, id):
+        exp_month = self.field("exp_month", 1)
+        exp_year = self.field("exp_year", 2020)
+        number = self.field("number", 4242424242424242)
+        api = self.get_api()
+        balance = api.create_card_customer(
+            id, exp_month, exp_year, number
+        )
+        return balance
+
     def get_api(self):
         return base.get_api()
 

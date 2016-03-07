@@ -54,9 +54,11 @@ class CustomerApi(object):
         url = self.base_url + "customers/%s/sources" % customer_id
         contents = self.post(
             url,
-            object = "card",
-            exp_month = exp_month,
-            exp_year = exp_year,
-            number = number
+            params = {
+                "source[object]" : "card",
+                "source[exp_month]" : exp_month,
+                "source[exp_year]" : exp_year,
+                "source[number]" : number
+            }
         )
         return contents
