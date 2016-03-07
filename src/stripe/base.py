@@ -57,3 +57,18 @@ class Api(
         self.api_key = appier.conf("STRIPE_API_KEY", None)
         self.base_url = kwargs.get("base_url", BASE_URL)
         self.api_key = kwargs.get("api_key", self.api_key)
+
+    def build(
+        self,
+        method,
+        url,
+        data = None,
+        data_j = None,
+        data_m = None,
+        headers = None,
+        params = None,
+        mime = None,
+        kwargs = None
+    ):
+        auth = kwargs.pop("auth", True)
+        if auth: headers["Authorization"] = "Bearer %s" % self.api_key
