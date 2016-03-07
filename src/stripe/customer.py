@@ -19,6 +19,9 @@
 # You should have received a copy of the Apache License along with
 # Hive Stripe API. If not, see <http://www.apache.org/licenses/>.
 
+__author__ = "João Magalhães <joamag@hive.pt>"
+""" The author(s) of the module """
+
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -34,12 +37,15 @@ __copyright__ = "Copyright (c) 2008-2016 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
-from . import balance
-from . import base
-from . import charge
-from . import customer
+class CustomerApi(object):
 
-from .balance import BalanceApi
-from .base import BASE_URL, Api
-from .charge import ChargeApi
-from .customer import CustomerApi
+    def create_card_customer(self, customer, exp_month, exp_year, number):
+        url = self.base_url + "customers/%s/sources" % customer
+        contents = self.post(
+            url,
+            object = "card",
+            exp_month = exp_month,
+            exp_year = exp_year,
+            number = number
+        )
+        return contents
