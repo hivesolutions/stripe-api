@@ -39,8 +39,19 @@ __license__ = "Apache License, Version 2.0"
 
 class CustomerApi(object):
 
-    def create_card_customer(self, customer, exp_month, exp_year, number):
-        url = self.base_url + "customers/%s/sources" % customer
+    def create_customer(self):
+        url = self.base_url + "customers"
+        contents = self.post(url)
+        return contents
+
+    def create_card_customer(
+        self,
+        customer_id,
+        exp_month,
+        exp_year,
+        number
+    ):
+        url = self.base_url + "customers/%s/sources" % customer_id
         contents = self.post(
             url,
             object = "card",

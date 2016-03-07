@@ -41,6 +41,7 @@ import appier
 
 from . import charge
 from . import balance
+from . import customer
 
 BASE_URL = "https://api.stripe.com/v1/"
 """ The default base url to be used when no other
@@ -49,7 +50,8 @@ base url value is provided to the constructor """
 class Api(
     appier.Api,
     charge.ChargeApi,
-    balance.BalanceApi
+    balance.BalanceApi,
+    customer.CustomerApi
 ):
 
     def __init__(self, *args, **kwargs):
