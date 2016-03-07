@@ -39,11 +39,17 @@ __license__ = "Apache License, Version 2.0"
 
 class ChargeApi(object):
 
-    def create_charge(self, amount, currency):
-        url = self.base_url + "balance"
+    def create_charge(self, amount, currency, capture = True):
+        url = self.base_url + "charges"
         contents = self.post(
             url,
             amount = amount,
-            currency = currency
+            currency = currency,
+            capture = True
         )
+        return contents
+
+    def get_charge(self, charge):
+        url = self.base_url + "charges/%s" % charge
+        contents = self.get(url)
         return contents
