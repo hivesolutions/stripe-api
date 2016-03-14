@@ -43,8 +43,12 @@ from . import base
 
 class StripeApp(appier.WebApp):
 
-    def __init__(self):
-        appier.WebApp.__init__(self, name = "stripe")
+    def __init__(self, *args, **kwargs):
+        appier.WebApp.__init__(
+            self,
+            name = "stripe",
+            *args, **kwargs
+        )
 
     @appier.route("/", "GET")
     def index(self):
