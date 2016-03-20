@@ -45,20 +45,20 @@ class ChargeApi(object):
         currency,
         exp_month,
         exp_year,
-        number
+        number,
+        name = None
     ):
         url = self.base_url + "charges"
-        contents = self.post(
-            url,
-            params = {
-                "amount" : amount,
-                "currency" : currency,
-                "source[object]" : "card",
-                "source[exp_month]" : exp_month,
-                "source[exp_year]" : exp_year,
-                "source[number]" : number
-            }
-        )
+        params = {
+            "amount" : amount,
+            "currency" : currency,
+            "source[object]" : "card",
+            "source[exp_month]" : exp_month,
+            "source[exp_year]" : exp_year,
+            "source[number]" : number
+        }
+        if name: params["source[name]"] = name
+        contents = self.post(url, params = params)
         return contents
 
     def get_charge(self, charge):
