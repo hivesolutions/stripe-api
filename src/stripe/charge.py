@@ -46,6 +46,7 @@ class ChargeApi(object):
         exp_month,
         exp_year,
         number,
+        cvc = None,
         name = None
     ):
         url = self.base_url + "charges"
@@ -57,6 +58,7 @@ class ChargeApi(object):
             "source[exp_year]" : exp_year,
             "source[number]" : number
         }
+        if cvc: params["source[cvc]"] = cvc
         if name: params["source[name]"] = name
         contents = self.post(url, params = params)
         return contents
