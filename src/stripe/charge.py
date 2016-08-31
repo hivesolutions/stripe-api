@@ -55,7 +55,8 @@ class ChargeApi(object):
         address_city = None,
         address_zip = None,
         address_line1 = None,
-        address_line2 = None
+        address_line2 = None,
+        metadata = {}
     ):
         url = self.base_url + "charges"
         params = {
@@ -76,6 +77,8 @@ class ChargeApi(object):
         if address_zip: params["source[address_zip]"] = address_zip
         if address_line1: params["source[address_line1]"] = address_line1
         if address_line2: params["source[address_line2]"] = address_line2
+        for key, value in metadata.items():
+            params["metadata[" + key + "]"] = value
         contents = self.post(url, params = params)
         return contents
 
