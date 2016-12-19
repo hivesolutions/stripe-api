@@ -45,7 +45,13 @@ class TokenApi(object):
         exp_year,
         number,
         cvc = None,
-        name = None
+        name = None,
+        address_country = None,
+        address_state = None,
+        address_city = None,
+        address_zip = None,
+        address_line1 = None,
+        address_line2 = None
     ):
         url = self.base_url + "tokens"
         params = {
@@ -55,5 +61,11 @@ class TokenApi(object):
         }
         if cvc: params["card[cvc]"] = cvc
         if name: params["card[name]"] = name
+        if address_country: params["card[address_country]"] = address_country
+        if address_state: params["card[address_state]"] = address_state
+        if address_city: params["card[address_city]"] = address_city
+        if address_zip: params["card[address_zip]"] = address_zip
+        if address_line1: params["card[address_line1]"] = address_line1
+        if address_line2: params["card[address_line2]"] = address_line2
         contents = self.post(url, params = params)
         return contents
