@@ -39,6 +39,7 @@ __license__ = "Apache License, Version 2.0"
 
 import appier
 
+from . import token
 from . import charge
 from . import balance
 from . import customer
@@ -49,6 +50,7 @@ base url value is provided to the constructor """
 
 class Api(
     appier.Api,
+    token.TokenApi,
     charge.ChargeApi,
     balance.BalanceApi,
     customer.CustomerApi
