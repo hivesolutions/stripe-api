@@ -98,6 +98,15 @@ class StripeApp(appier.WebApp):
         )
         return balance
 
+    @appier.route("/charges/new_token", "GET")
+    def new_charge_token(self):
+        token = self.field("token", mandatory = True)
+        amount = self.field("amount", 100, cast = int)
+        currency = self.field("currency", "EUR")
+        api = self.get_api()
+        balance = api.create_charge_token(amount, currency, token)
+        return balance
+
     @appier.route("/charges/<str:id>", "GET")
     def get_charge(self, id):
         api = self.get_api()
@@ -157,7 +166,8 @@ class StripeApp(appier.WebApp):
 
     @appier.route("/3d_secure/return", "GET")
     def return_3d_secure(self):
-        status = self.field("status", "success")
+        id = self.field("id", None)
+        status = self.field("status", None)
         error_code = self.field("error_code", None)
         return dict(
             status = status,
