@@ -85,9 +85,16 @@ class StripeApp(appier.WebApp):
         exp_year = self.field("exp_year", 2020)
         number = self.field("number", 4242424242424242)
         cvc = self.field("cvc", None)
+        name = self.field("name", None)
         api = self.get_api()
         balance = api.create_charge(
-            amount, currency, exp_month, exp_year, number, cvc = cvc
+            amount,
+            currency,
+            exp_month,
+            exp_year,
+            number,
+            cvc = cvc,
+            name = name
         )
         return balance
 
@@ -103,9 +110,10 @@ class StripeApp(appier.WebApp):
         exp_year = self.field("exp_year", 2020)
         number = self.field("number", 4242424242424242)
         cvc = self.field("cvc", None)
+        name = self.field("name", None)
         api = self.get_api()
         token = api.create_token(
-            exp_month, exp_year, number, cvc = cvc
+            exp_month, exp_year, number, cvc = cvc, name = name
         )
         return token
 
@@ -118,13 +126,14 @@ class StripeApp(appier.WebApp):
         exp_year = self.field("exp_year", 2020)
         number = self.field("number", 4242424242424242)
         cvc = self.field("cvc", None)
+        name = self.field("name", None)
         api = self.get_api()
         return_url = return_url or self.url_for(
             "stripe.return_3d_secure",
             absolute = True
         )
         token = api.create_token(
-            exp_month, exp_year, number, cvc = cvc
+            exp_month, exp_year, number, cvc = cvc, name = name
         )
         secure = api.create_3d_secure(
             amount,
@@ -134,9 +143,24 @@ class StripeApp(appier.WebApp):
         )
         return secure
 
+    @appier.route("/3d_secure/redirect", "GET")
+    def redirect_3d_secure(self):
+        redirect_url = self.field("redirect_url", None)
+        return self.html("<html>" +\
+            "<body onload=\"document.autoRedirect.submit();\">" +\
+            "<form name=\"autoRedirect\" method=\"POST\" action=\"%s\">" % redirect_url +\
+            "</form>" +\
+            "</body>" +\
+            "</html>")
+
     @appier.route("/3d_secure/return", "GET")
     def return_3d_secure(self):
-        pass
+        status = self.field("status", "success")
+        error_code = self.field("error_code", None)
+        return dict(
+            status = status,
+            error_code = error_code
+        )
 
     def get_api(self):
         return base.get_api()
