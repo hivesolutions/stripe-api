@@ -96,6 +96,17 @@ class StripeApp(appier.WebApp):
         charge = api.get_charge(id)
         return charge
 
+    @appier.route("/tokens/new", "GET")
+    def new_token(self):
+        exp_month = self.field("exp_month", 1)
+        exp_year = self.field("exp_year", 2020)
+        number = self.field("number", 4242424242424242)
+        api = self.get_api()
+        token = api.create_token(
+            exp_month, exp_year, number
+        )
+        return token
+
     def get_api(self):
         return base.get_api()
 
