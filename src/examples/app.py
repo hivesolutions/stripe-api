@@ -68,9 +68,9 @@ class StripeApp(appier.WebApp):
 
     @appier.route("/customers/<str:id>/card/new", "GET")
     def new_card_customer(self, id):
-        exp_month = self.field("exp_month", 1)
-        exp_year = self.field("exp_year", 2020)
-        number = self.field("number", 4242424242424242)
+        exp_month = self.field("exp_month", 1, cast = int)
+        exp_year = self.field("exp_year", 2020, cast = int)
+        number = self.field("number", 4242424242424242, cast = int)
         api = self.get_api()
         balance = api.create_card_customer(
             id, exp_month, exp_year, number
@@ -81,9 +81,9 @@ class StripeApp(appier.WebApp):
     def new_charge(self):
         amount = self.field("amount", 100, cast = int)
         currency = self.field("currency", "EUR")
-        exp_month = self.field("exp_month", 1)
-        exp_year = self.field("exp_year", 2020)
-        number = self.field("number", 4242424242424242)
+        exp_month = self.field("exp_month", 1, cast = int)
+        exp_year = self.field("exp_year", 2020, cast = int)
+        number = self.field("number", 4242424242424242, cast = int)
         cvc = self.field("cvc", None)
         name = self.field("name", None)
         api = self.get_api()
@@ -106,9 +106,9 @@ class StripeApp(appier.WebApp):
 
     @appier.route("/tokens/new", "GET")
     def new_token(self):
-        exp_month = self.field("exp_month", 1)
-        exp_year = self.field("exp_year", 2020)
-        number = self.field("number", 4242424242424242)
+        exp_month = self.field("exp_month", 1, cast = int)
+        exp_year = self.field("exp_year", 2020, cast = int)
+        number = self.field("number", 4242424242424242, cast = int)
         cvc = self.field("cvc", None)
         name = self.field("name", None)
         api = self.get_api()
@@ -122,9 +122,9 @@ class StripeApp(appier.WebApp):
         amount = self.field("amount", 100, cast = int)
         currency = self.field("currency", "EUR")
         return_url = self.field("return_url", None)
-        exp_month = self.field("exp_month", 1)
-        exp_year = self.field("exp_year", 2020)
-        number = self.field("number", 4242424242424242)
+        exp_month = self.field("exp_month", 1, cast = int)
+        exp_year = self.field("exp_year", 2020, cast = int)
+        number = self.field("number", 4242424242424242, cast = int)
         cvc = self.field("cvc", None)
         name = self.field("name", None)
         api = self.get_api()
@@ -146,12 +146,14 @@ class StripeApp(appier.WebApp):
     @appier.route("/3d_secure/redirect", "GET")
     def redirect_3d_secure(self):
         redirect_url = self.field("redirect_url", None)
-        return self.html("<html>" +\
+        return self.html(
+            "<html>" +\
             "<body onload=\"document.autoRedirect.submit();\">" +\
             "<form name=\"autoRedirect\" method=\"POST\" action=\"%s\">" % redirect_url +\
             "</form>" +\
             "</body>" +\
-            "</html>")
+            "</html>"
+        )
 
     @appier.route("/3d_secure/return", "GET")
     def return_3d_secure(self):
