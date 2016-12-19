@@ -41,6 +41,7 @@ import appier
 
 from . import token
 from . import charge
+from . import secure
 from . import balance
 from . import customer
 
@@ -52,6 +53,7 @@ class Api(
     appier.Api,
     token.TokenApi,
     charge.ChargeApi,
+    secure.SecureApi,
     balance.BalanceApi,
     customer.CustomerApi
 ):

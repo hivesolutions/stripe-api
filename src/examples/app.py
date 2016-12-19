@@ -39,7 +39,7 @@ __license__ = "Apache License, Version 2.0"
 
 import appier
 
-from . import base
+import base
 
 class StripeApp(appier.WebApp):
 
