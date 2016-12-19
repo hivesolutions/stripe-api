@@ -39,7 +39,7 @@ __license__ = "Apache License, Version 2.0"
 
 import appier
 
-import base
+from . import base
 
 class StripeApp(appier.WebApp):
 
@@ -108,6 +108,35 @@ class StripeApp(appier.WebApp):
             exp_month, exp_year, number, cvc = cvc
         )
         return token
+
+    @appier.route("/3d_secure/new", "GET")
+    def new_3d_secure(self):
+        amount = self.field("amount", 100, cast = int)
+        currency = self.field("currency", "EUR")
+        return_url = self.field("return_url", None)
+        exp_month = self.field("exp_month", 1)
+        exp_year = self.field("exp_year", 2020)
+        number = self.field("number", 4242424242424242)
+        cvc = self.field("cvc", None)
+        api = self.get_api()
+        return_url = return_url or self.url_for(
+            "stripe.return_3d_secure",
+            absolute = True
+        )
+        token = api.create_token(
+            exp_month, exp_year, number, cvc = cvc
+        )
+        secure = api.create_3d_secure(
+            amount,
+            currency,
+            return_url,
+            card = token["id"]
+        )
+        return secure
+
+    @appier.route("/3d_secure/return", "GET")
+    def return_3d_secure(self):
+        pass
 
     def get_api(self):
         return base.get_api()
