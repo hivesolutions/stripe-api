@@ -84,9 +84,10 @@ class StripeApp(appier.WebApp):
         exp_month = self.field("exp_month", 1)
         exp_year = self.field("exp_year", 2020)
         number = self.field("number", 4242424242424242)
+        cvc = self.field("cvc", None)
         api = self.get_api()
         balance = api.create_charge(
-            amount, currency, exp_month, exp_year, number
+            amount, currency, exp_month, exp_year, number, cvc = cvc
         )
         return balance
 
@@ -101,9 +102,10 @@ class StripeApp(appier.WebApp):
         exp_month = self.field("exp_month", 1)
         exp_year = self.field("exp_year", 2020)
         number = self.field("number", 4242424242424242)
+        cvc = self.field("cvc", None)
         api = self.get_api()
         token = api.create_token(
-            exp_month, exp_year, number
+            exp_month, exp_year, number, cvc = cvc
         )
         return token
 
