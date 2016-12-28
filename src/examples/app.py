@@ -180,3 +180,5 @@ class StripeApp(appier.WebApp):
 if __name__ == "__main__":
     app = StripeApp()
     app.serve()
+else:
+    __path__ = []
