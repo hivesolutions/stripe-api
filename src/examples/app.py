@@ -84,7 +84,7 @@ class StripeApp(appier.WebApp):
         exp_month = self.field("exp_month", 1, cast = int)
         exp_year = self.field("exp_year", 2020, cast = int)
         number = self.field("number", 4242424242424242, cast = int)
-        cvc = self.field("cvc", None)
+        cvc = self.field("cvc", 123, cast = int)
         name = self.field("name", None)
         api = self.get_api()
         balance = api.create_charge(
@@ -118,7 +118,7 @@ class StripeApp(appier.WebApp):
         exp_month = self.field("exp_month", 1, cast = int)
         exp_year = self.field("exp_year", 2020, cast = int)
         number = self.field("number", 4242424242424242, cast = int)
-        cvc = self.field("cvc", None)
+        cvc = self.field("cvc", 123, cast = int)
         name = self.field("name", None)
         api = self.get_api()
         token = api.create_token(
@@ -134,7 +134,7 @@ class StripeApp(appier.WebApp):
         exp_month = self.field("exp_month", 1, cast = int)
         exp_year = self.field("exp_year", 2020, cast = int)
         number = self.field("number", 4242424242424242, cast = int)
-        cvc = self.field("cvc", None)
+        cvc = self.field("cvc", 123, cast = int)
         name = self.field("name", None)
         api = self.get_api()
         return_url = return_url or self.url_for(
@@ -166,6 +166,54 @@ class StripeApp(appier.WebApp):
 
     @appier.route("/3d_secure/return", "GET")
     def return_3d_secure(self):
+        id = self.field("id", None)
+        status = self.field("status", None)
+        error_code = self.field("error_code", None)
+        return dict(
+            status = status,
+            error_code = error_code
+        )
+
+    @appier.route("/source/new", "GET")
+    def new_source(self):
+        amount = self.field("amount", 100, cast = int)
+        currency = self.field("currency", "EUR")
+        return_url = self.field("return_url", None)
+        exp_month = self.field("exp_month", 1, cast = int)
+        exp_year = self.field("exp_year", 2020, cast = int)
+        number = self.field("number", 4242424242424242, cast = int)
+        cvc = self.field("cvc", 123, cast = int)
+        name = self.field("name", None)
+        api = self.get_api()
+        return_url = return_url or self.url_for(
+            "stripe.return_source",
+            absolute = True
+        )
+        token = api.create_token(
+            exp_month, exp_year, number, cvc = cvc, name = name
+        )
+        secure = api.create_3d_secure(
+            amount,
+            currency,
+            return_url,
+            card = token["id"]
+        )
+        return secure
+
+    @appier.route("/source/redirect", "GET")
+    def redirect_source(self):
+        redirect_url = self.field("redirect_url", None)
+        return self.html(
+            "<html>" +\
+            "<body onload=\"document.autoRedirect.submit();\">" +\
+            "<form name=\"autoRedirect\" method=\"POST\" action=\"%s\">" % redirect_url +\
+            "</form>" +\
+            "</body>" +\
+            "</html>"
+        )
+
+    @appier.route("/source/return", "GET")
+    def return_source(self):
         id = self.field("id", None)
         status = self.field("status", None)
         error_code = self.field("error_code", None)

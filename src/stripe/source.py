@@ -19,6 +19,9 @@
 # You should have received a copy of the Apache License along with
 # Hive Stripe API. If not, see <http://www.apache.org/licenses/>.
 
+__author__ = "João Magalhães <joamag@hive.pt>"
+""" The author(s) of the module """
+
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -34,18 +37,25 @@ __copyright__ = "Copyright (c) 2008-2017 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
-from . import balance
-from . import base
-from . import charge
-from . import customer
-from . import secure
-from . import source
-from . import token
+class SourceApi(object):
 
-from .balance import BalanceApi
-from .base import BASE_URL, Api
-from .charge import ChargeApi
-from .customer import CustomerApi
-from .secure import SecureApi
-from .source import SourceApi
-from .token import TokenApi
+    def create_source(
+        self,
+        amount,
+        currency,
+        return_url,
+        type = "three_d_secure",
+        card = None,
+        customer = None
+    ):
+        url = self.base_url + "sources"
+        params = {
+            "amount" : amount,
+            "currency" : currency,
+            "type" : type,
+            "redirect[return_url]" : return_url
+        }
+        if card: params["three_d_secure[card]"] = card
+        if customer: params["three_d_secure[customer]"] = customer
+        contents = self.post(url, params = params)
+        return contents
