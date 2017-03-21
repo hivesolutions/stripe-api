@@ -225,13 +225,11 @@ class StripeApp(appier.WebApp):
     def return_source(self):
         client_secret = self.field("client_secret", None)
         source = self.field("source", None)
-        status = self.field("status", None)
-        error_code = self.field("error_code", None)
+        livemode = self.field("livemode", None)
         return dict(
             client_secret = client_secret,
             source = source,
-            status = status,
-            error_code = error_code
+            livemode = livemode
         )
 
     def get_api(self):
