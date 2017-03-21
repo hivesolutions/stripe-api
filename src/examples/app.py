@@ -128,12 +128,13 @@ class StripeApp(appier.WebApp):
 
     @appier.route("/3d_secure/new", "GET")
     def new_3d_secure(self):
+        redirect = self.field("redirect", True, cast = bool)
         amount = self.field("amount", 100, cast = int)
         currency = self.field("currency", "EUR")
         return_url = self.field("return_url", None)
         exp_month = self.field("exp_month", 1, cast = int)
         exp_year = self.field("exp_year", 2020, cast = int)
-        number = self.field("number", 4242424242424242, cast = int)
+        number = self.field("number", 4000000000003063, cast = int)
         cvc = self.field("cvc", 123, cast = int)
         name = self.field("name", None)
         api = self.get_api()
@@ -150,6 +151,14 @@ class StripeApp(appier.WebApp):
             return_url,
             card = token["id"]
         )
+        redirect_url = secure.get("redirect_url", None)
+        if redirect and redirect_url:
+            return self.redirect(
+                self.url_for(
+                    "stripe.redirect_3d_secure",
+                    redirect_url = redirect_url
+                )
+            )
         return secure
 
     @appier.route("/3d_secure/redirect", "GET")
@@ -176,12 +185,13 @@ class StripeApp(appier.WebApp):
 
     @appier.route("/source/new", "GET")
     def new_source(self):
+        redirect = self.field("redirect", True, cast = bool)
         amount = self.field("amount", 100, cast = int)
         currency = self.field("currency", "EUR")
         return_url = self.field("return_url", None)
         exp_month = self.field("exp_month", 1, cast = int)
         exp_year = self.field("exp_year", 2020, cast = int)
-        number = self.field("number", 4242424242424242, cast = int)
+        number = self.field("number", 4000000000003063, cast = int)
         cvc = self.field("cvc", 123, cast = int)
         name = self.field("name", None)
         api = self.get_api()
@@ -198,6 +208,14 @@ class StripeApp(appier.WebApp):
             return_url,
             card = token["id"]
         )
+        redirect_url = secure.get("redirect_url", None)
+        if redirect and redirect_url:
+            return self.redirect(
+                self.url_for(
+                    "stripe.redirect_3d_secure",
+                    redirect_url = redirect_url
+                )
+            )
         return secure
 
     @appier.route("/source/redirect", "GET")
