@@ -67,7 +67,7 @@ class SourceApi(object):
         if address_country: params["owner[address][country]"] = address_country
         if address_state: params["owner[address][state]"] = address_state
         if address_city: params["owner[address][city]"] = address_city
-        if address_zip: params["owner[address][zip]"] = address_zip
+        if address_zip: params["owner[address][postal_code]"] = address_zip
         if address_line1: params["owner[address][line1]"] = address_line1
         if address_line2: params["owner[address][line2]"] = address_line2
         contents = self.post(url, params = params)
