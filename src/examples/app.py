@@ -52,7 +52,13 @@ class StripeApp(appier.WebApp):
 
     @appier.route("/", "GET")
     def index(self):
-        return self.balance()
+        return self.accounts()
+
+    @appier.route("/accounts", "GET")
+    def accounts(self):
+        api = self.get_api()
+        accounts = api.list_accounts()
+        return accounts
 
     @appier.route("/balance", "GET")
     def balance(self):
@@ -179,6 +185,7 @@ class StripeApp(appier.WebApp):
         status = self.field("status", None)
         error_code = self.field("error_code", None)
         return dict(
+            id = id,
             status = status,
             error_code = error_code
         )
@@ -199,43 +206,30 @@ class StripeApp(appier.WebApp):
             "stripe.return_source",
             absolute = True
         )
-        token = api.create_token(
+        source = api.create_card_source(
             exp_month, exp_year, number, cvc = cvc, name = name
         )
-        secure = api.create_3d_secure(
+        secure = api.create_3d_secure_source(
             amount,
             currency,
             return_url,
-            card = token["id"]
+            card = source["id"]
         )
-        redirect_url = secure.get("redirect_url", None)
+        redirect_m = secure.get("redirect", {})
+        redirect_url = redirect_m.get("url", None)
         if redirect and redirect_url:
-            return self.redirect(
-                self.url_for(
-                    "stripe.redirect_3d_secure",
-                    redirect_url = redirect_url
-                )
-            )
+            return self.redirect(redirect_url)
         return secure
-
-    @appier.route("/source/redirect", "GET")
-    def redirect_source(self):
-        redirect_url = self.field("redirect_url", None)
-        return self.html(
-            "<html>" +\
-            "<body onload=\"document.autoRedirect.submit();\">" +\
-            "<form name=\"autoRedirect\" method=\"POST\" action=\"%s\">" % redirect_url +\
-            "</form>" +\
-            "</body>" +\
-            "</html>"
-        )
 
     @appier.route("/source/return", "GET")
     def return_source(self):
-        id = self.field("id", None)
+        client_secret = self.field("client_secret", None)
+        source = self.field("source", None)
         status = self.field("status", None)
         error_code = self.field("error_code", None)
         return dict(
+            client_secret = client_secret,
+            source = source,
             status = status,
             error_code = error_code
         )

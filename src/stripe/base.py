@@ -43,6 +43,7 @@ from . import token
 from . import charge
 from . import secure
 from . import source
+from . import account
 from . import balance
 from . import customer
 
@@ -56,6 +57,7 @@ class Api(
     charge.ChargeApi,
     secure.SecureApi,
     source.SourceApi,
+    account.AccountApi,
     balance.BalanceApi,
     customer.CustomerApi
 ):

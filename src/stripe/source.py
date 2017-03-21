@@ -39,7 +39,41 @@ __license__ = "Apache License, Version 2.0"
 
 class SourceApi(object):
 
-    def create_source(
+    def create_card_source(
+        self,
+        exp_month,
+        exp_year,
+        number,
+        type = "card",
+        cvc = None,
+        name = None,
+        address_country = None,
+        address_state = None,
+        address_city = None,
+        address_zip = None,
+        address_line1 = None,
+        address_line2 = None
+    ):
+        url = self.base_url + "sources"
+        params = {
+            "type" : type,
+            "card[exp_month]" : exp_month,
+            "card[exp_year]" : exp_year,
+            "card[number]" : number
+        }
+        if cvc: params["card[cvc]"] = cvc
+        if name: params["card[name]"] = name
+        if name: params["owner[name]"] = name
+        if address_country: params["owner[address][country]"] = address_country
+        if address_state: params["owner[address][state]"] = address_state
+        if address_city: params["owner[address][city]"] = address_city
+        if address_zip: params["owner[address][zip]"] = address_zip
+        if address_line1: params["owner[address][line1]"] = address_line1
+        if address_line2: params["owner[address][line2]"] = address_line2
+        contents = self.post(url, params = params)
+        return contents
+
+    def create_3d_secure_source(
         self,
         amount,
         currency,
