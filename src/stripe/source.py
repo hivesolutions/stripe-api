@@ -62,7 +62,6 @@ class SourceApi(object):
             "card[number]" : number
         }
         if cvc: params["card[cvc]"] = cvc
-        if name: params["card[name]"] = name
         if name: params["owner[name]"] = name
         if address_country: params["owner[address][country]"] = address_country
         if address_state: params["owner[address][state]"] = address_state
