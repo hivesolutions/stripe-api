@@ -48,7 +48,7 @@ setuptools.setup(
     description = "Stripe API Client",
     license = "Apache License, Version 2.0",
     keywords = "Stripe api",
-    url = "http://stripe_api.hive.pt",
+    url = "http://stripe-api.hive.pt",
     zip_safe = False,
     packages = [
         "stripe"
