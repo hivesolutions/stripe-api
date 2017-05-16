@@ -1,4 +1,4 @@
-# [Stripe API](http://stripe_api.hive.pt)
+# [Stripe API](http://stripe-api.hive.pt)
 
 Python API client for the Stripe service.
 
