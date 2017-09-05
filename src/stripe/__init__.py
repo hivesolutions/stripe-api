@@ -43,11 +43,11 @@ from . import secure
 from . import source
 from . import token
 
-from .account import AccountApi
-from .balance import BalanceApi
-from .base import BASE_URL, Api
-from .charge import ChargeApi
-from .customer import CustomerApi
-from .secure import SecureApi
-from .source import SourceApi
-from .token import TokenApi
+from .account import AccountAPI
+from .balance import BalanceAPI
+from .base import BASE_URL, API
+from .charge import ChargeAPI
+from .customer import CustomerAPI
+from .secure import SecureAPI
+from .source import SourceAPI
+from .token import TokenAPI

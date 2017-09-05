@@ -37,7 +37,7 @@ __copyright__ = "Copyright (c) 2008-2017 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
-class SecureApi(object):
+class SecureAPI(object):
 
     def create_3d_secure(
         self,

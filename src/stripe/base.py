@@ -51,19 +51,19 @@ BASE_URL = "https://api.stripe.com/v1/"
 """ The default base url to be used when no other
 base url value is provided to the constructor """
 
-class Api(
-    appier.Api,
-    token.TokenApi,
-    charge.ChargeApi,
-    secure.SecureApi,
-    source.SourceApi,
-    account.AccountApi,
-    balance.BalanceApi,
-    customer.CustomerApi
+class API(
+    appier.API,
+    token.TokenAPI,
+    charge.ChargeAPI,
+    secure.SecureAPI,
+    source.SourceAPI,
+    account.AccountAPI,
+    balance.BalanceAPI,
+    customer.CustomerAPI
 ):
 
     def __init__(self, *args, **kwargs):
-        appier.Api.__init__(self, *args, **kwargs)
+        appier.API.__init__(self, *args, **kwargs)
         self.api_key = appier.conf("STRIPE_API_KEY", None)
         self.base_url = kwargs.get("base_url", BASE_URL)
         self.api_key = kwargs.get("api_key", self.api_key)

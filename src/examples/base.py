@@ -42,6 +42,6 @@ import appier
 import stripe
 
 def get_api():
-    return stripe.Api(
+    return stripe.API(
         api_key = appier.conf("STRIPE_API_KEY")
     )
