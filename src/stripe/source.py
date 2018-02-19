@@ -39,6 +39,11 @@ __license__ = "Apache License, Version 2.0"
 
 class SourceAPI(object):
 
+    def get_source(self, token):
+        url = self.base_url + "sources/%s" % token
+        contents = self.get(url)
+        return contents
+
     def create_card_source(
         self,
         exp_month,

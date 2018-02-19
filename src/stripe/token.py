@@ -39,6 +39,11 @@ __license__ = "Apache License, Version 2.0"
 
 class TokenAPI(object):
 
+    def get_token(self, token):
+        url = self.base_url + "tokens/%s" % token
+        contents = self.get(url)
+        return contents
+
     def create_token(
         self,
         exp_month,
