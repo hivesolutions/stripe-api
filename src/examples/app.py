@@ -171,6 +171,7 @@ class StripeApp(appier.WebApp):
     def redirect_3d_secure(self):
         redirect_url = self.field("redirect_url", None)
         return self.html(
+            "<!DOCTYPE html>" +\
             "<html>" +\
             "<body onload=\"document.autoRedirect.submit();\">" +\
             "<form name=\"autoRedirect\" method=\"POST\" action=\"%s\">" % redirect_url +\
