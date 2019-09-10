@@ -132,6 +132,14 @@ class StripeApp(appier.WebApp):
         )
         return token
 
+    @appier.route("/intents/new", "GET")
+    def new_intent(self):
+        amount = self.field("amount", 100, cast = int)
+        currency = self.field("currency", "EUR")
+        api = self.get_api()
+        intent = api.create_intent(amount, currency)
+        return intent
+
     @appier.route("/3d_secure/new", "GET")
     def new_3d_secure(self):
         redirect = self.field("redirect", True, cast = bool)
