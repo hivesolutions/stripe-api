@@ -19,6 +19,9 @@
 # You should have received a copy of the Apache License along with
 # Hive Stripe API. If not, see <http://www.apache.org/licenses/>.
 
+__author__ = "João Magalhães <joamag@hive.pt>"
+""" The author(s) of the module """
+
 __version__ = "1.0.0"
 """ The version of the module """
 
@@ -34,22 +37,24 @@ __copyright__ = "Copyright (c) 2008-2019 Hive Solutions Lda."
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
-from . import account
-from . import balance
-from . import base
-from . import charge
-from . import customer
-from . import intent
-from . import secure
-from . import source
-from . import token
+class IntentAPI(object):
 
-from .account import AccountAPI
-from .balance import BalanceAPI
-from .base import BASE_URL, API
-from .charge import ChargeAPI
-from .customer import CustomerAPI
-from .intent import IntentAPI
-from .secure import SecureAPI
-from .source import SourceAPI
-from .token import TokenAPI
+    def create_intent(
+        self,
+        amount,
+        currency,
+        application_fee_amount = None,
+        capture_method = None,
+        confirm = None
+    ):
+        url = self.base_url + "payment_intents"
+        params = {
+            "amount" : amount,
+            "currency" : currency
+        }
+        if application_fee_amount:
+            params["application_fee_amount"] = application_fee_amount
+        if capture_method: params["capture_method"] = capture_method
+        if confirm: params["confirm"] = confirm
+        contents = self.post(url, params = params)
+        return contents

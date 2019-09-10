@@ -41,6 +41,7 @@ import appier
 
 from . import token
 from . import charge
+from . import intent
 from . import secure
 from . import source
 from . import account
@@ -54,6 +55,7 @@ base URL value is provided to the constructor """
 class API(
     appier.API,
     token.TokenAPI,
+    intent.IntentAPI,
     charge.ChargeAPI,
     secure.SecureAPI,
     source.SourceAPI,
