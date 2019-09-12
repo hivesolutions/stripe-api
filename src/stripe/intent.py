@@ -45,7 +45,8 @@ class IntentAPI(object):
         currency,
         application_fee_amount = None,
         capture_method = None,
-        confirm = None
+        confirm = None,
+        three_d_secure = None
     ):
         url = self.base_url + "payment_intents"
         params = {
@@ -56,6 +57,8 @@ class IntentAPI(object):
             params["application_fee_amount"] = application_fee_amount
         if capture_method: params["capture_method"] = capture_method
         if confirm: params["confirm"] = confirm
+        if three_d_secure:
+            params["payment_method_options[card][request_three_d_secure]"] = three_d_secure
         contents = self.post(url, params = params)
         return contents
 
