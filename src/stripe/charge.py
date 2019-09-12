@@ -39,6 +39,14 @@ __license__ = "Apache License, Version 2.0"
 
 class ChargeAPI(object):
 
+    def list_charges(self, payment_intent = None, limit = None):
+        url = self.base_url + "charges"
+        params = {}
+        if payment_intent: params["payment_intent"] = payment_intent
+        if limit: params["limit"] = limit
+        contents = self.get(url, params = params)
+        return contents
+
     def create_charge(
         self,
         amount,
