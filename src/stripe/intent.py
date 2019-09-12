@@ -58,3 +58,8 @@ class IntentAPI(object):
         if confirm: params["confirm"] = confirm
         contents = self.post(url, params = params)
         return contents
+
+    def capture_intent(self, identifier):
+        url = self.base_url + "payment_intents/%s/capture" % identifier
+        contents = self.post(url)
+        return contents
