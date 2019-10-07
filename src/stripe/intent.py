@@ -47,7 +47,6 @@ class IntentAPI(object):
         capture_method = None,
         confirm = None,
         description = None,
-        name = None,
         three_d_secure = None,
         metadata = {}
     ):
@@ -61,7 +60,6 @@ class IntentAPI(object):
         if capture_method: params["capture_method"] = capture_method
         if confirm: params["confirm"] = confirm
         if description: params["description"] = description
-        if name: params["customer[name]"] = name
         if three_d_secure:
             params["payment_method_options[card][request_three_d_secure]"] = three_d_secure
         for key, value in metadata.items():
