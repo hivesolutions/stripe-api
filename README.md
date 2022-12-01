@@ -8,7 +8,7 @@ Stripe API is currently licensed under the [Apache License, Version 2.0](http://
 
 ## Build Automation
 
-[![Build Status](https://app.travis-ci.com/hivesolutions/stripe_api.svg?branch=master)](https://travis-ci.com/github/hivesolutions/stripe_api)
-[![Coverage Status](https://coveralls.io/repos/hivesolutions/stripe_api/badge.svg?branch=master)](https://coveralls.io/r/hivesolutions/stripe_api?branch=master)
-[![PyPi Status](https://img.shields.io/pypi/v/stripe_api.svg)](https://pypi.python.org/pypi/stripe_api)
+[![Build Status](https://app.travis-ci.com/hivesolutions/stripe-api.svg?branch=master)](https://travis-ci.com/github/hivesolutions/stripe-api)
+[![Coverage Status](https://coveralls.io/repos/hivesolutions/stripe-api/badge.svg?branch=master)](https://coveralls.io/r/hivesolutions/stripe-api?branch=master)
+[![PyPi Status](https://img.shields.io/pypi/v/stripe-api.svg)](https://pypi.python.org/pypi/stripe-api)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/)
