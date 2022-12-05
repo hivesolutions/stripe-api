@@ -4,4 +4,4 @@
 session.shelve*
 
 /dist
-/src/stripe-api.egg-info
+/src/stripe_api.egg-info
