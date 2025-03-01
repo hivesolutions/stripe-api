@@ -40,6 +40,7 @@ class IntentAPI(object):
         confirm=None,
         description=None,
         three_d_secure=None,
+        payment_method_types=[],
         metadata={},
     ):
         url = self.base_url + "payment_intents"
@@ -56,6 +57,8 @@ class IntentAPI(object):
             params["payment_method_options[card][request_three_d_secure]"] = (
                 three_d_secure
             )
+        for payment_method_type in payment_method_types:
+            params["payment_method_types[]"] = payment_method_type
         for key, value in metadata.items():
             params["metadata[" + key + "]"] = value
         contents = self.post(url, params=params)
