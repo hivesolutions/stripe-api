@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Stripe API
-# Copyright (c) 2008-2020 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Stripe API.
 #
@@ -22,16 +22,7 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2020 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
@@ -52,6 +43,7 @@ BASE_URL = "https://api.stripe.com/v1/"
 """ The default base URL to be used when no other
 base URL value is provided to the constructor """
 
+
 class API(
     appier.API,
     token.TokenAPI,
@@ -61,7 +53,7 @@ class API(
     source.SourceAPI,
     account.AccountAPI,
     balance.BalanceAPI,
-    customer.CustomerAPI
+    customer.CustomerAPI,
 ):
 
     def __init__(self, *args, **kwargs):
@@ -74,13 +66,14 @@ class API(
         self,
         method,
         url,
-        data = None,
-        data_j = None,
-        data_m = None,
-        headers = None,
-        params = None,
-        mime = None,
-        kwargs = None
+        data=None,
+        data_j=None,
+        data_m=None,
+        headers=None,
+        params=None,
+        mime=None,
+        kwargs=None,
     ):
         auth = kwargs.pop("auth", True)
-        if auth: headers["Authorization"] = "Bearer %s" % self.api_key
+        if auth:
+            headers["Authorization"] = "Bearer %s" % self.api_key

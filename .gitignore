@@ -3,5 +3,12 @@
 
 session.shelve*
 
+.DS_Store
+
+/.vscode/settings.json
+
+/.env
+/.venv
+
 /dist
 /src/stripe_api.egg-info

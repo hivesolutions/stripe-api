@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Stripe API
-# Copyright (c) 2008-2020 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Stripe API.
 #
@@ -22,20 +22,12 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2020 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
+
 
 class IntentAPI(object):
 
@@ -43,28 +35,30 @@ class IntentAPI(object):
         self,
         amount,
         currency,
-        application_fee_amount = None,
-        capture_method = None,
-        confirm = None,
-        description = None,
-        three_d_secure = None,
-        metadata = {}
+        application_fee_amount=None,
+        capture_method=None,
+        confirm=None,
+        description=None,
+        three_d_secure=None,
+        metadata={},
     ):
         url = self.base_url + "payment_intents"
-        params = {
-            "amount" : amount,
-            "currency" : currency
-        }
+        params = {"amount": amount, "currency": currency}
         if application_fee_amount:
             params["application_fee_amount"] = application_fee_amount
-        if capture_method: params["capture_method"] = capture_method
-        if confirm: params["confirm"] = confirm
-        if description: params["description"] = description
+        if capture_method:
+            params["capture_method"] = capture_method
+        if confirm:
+            params["confirm"] = confirm
+        if description:
+            params["description"] = description
         if three_d_secure:
-            params["payment_method_options[card][request_three_d_secure]"] = three_d_secure
+            params["payment_method_options[card][request_three_d_secure]"] = (
+                three_d_secure
+            )
         for key, value in metadata.items():
             params["metadata[" + key + "]"] = value
-        contents = self.post(url, params = params)
+        contents = self.post(url, params=params)
         return contents
 
     def capture_intent(self, identifier):

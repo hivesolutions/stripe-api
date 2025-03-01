@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Hive Stripe API
-# Copyright (c) 2008-2020 Hive Solutions Lda.
+# Copyright (c) 2008-2025 Hive Solutions Lda.
 #
 # This file is part of Hive Stripe API.
 #
@@ -22,38 +22,21 @@
 __author__ = "João Magalhães <joamag@hive.pt>"
 """ The author(s) of the module """
 
-__version__ = "1.0.0"
-""" The version of the module """
-
-__revision__ = "$LastChangedRevision$"
-""" The revision number of the module """
-
-__date__ = "$LastChangedDate$"
-""" The last change date of the module """
-
-__copyright__ = "Copyright (c) 2008-2020 Hive Solutions Lda."
+__copyright__ = "Copyright (c) 2008-2025 Hive Solutions Lda."
 """ The copyright for the module """
 
 __license__ = "Apache License, Version 2.0"
 """ The license for the module """
 
+
 class SecureAPI(object):
 
-    def create_3d_secure(
-        self,
-        amount,
-        currency,
-        return_url,
-        card = None,
-        customer = None
-    ):
+    def create_3d_secure(self, amount, currency, return_url, card=None, customer=None):
         url = self.base_url + "3d_secure"
-        params = {
-            "amount" : amount,
-            "currency" : currency,
-            "return_url" : return_url
-        }
-        if card: params["card"] = card
-        if customer: params["customer"] = customer
-        contents = self.post(url, params = params)
+        params = {"amount": amount, "currency": currency, "return_url": return_url}
+        if card:
+            params["card"] = card
+        if customer:
+            params["customer"] = customer
+        contents = self.post(url, params=params)
         return contents
