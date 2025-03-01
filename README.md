@@ -1,6 +1,6 @@
 # [Stripe API](http://stripe-api.hive.pt)
 
-Python API client for the Stripe service.
+Python API client for the [Stripe](https://stripe.com/) service.
 
 ## License
 
