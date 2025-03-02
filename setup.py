@@ -33,7 +33,7 @@ import setuptools
 
 setuptools.setup(
     name="stripe-api",
-    version="0.3.1",
+    version="0.3.2",
     author="Hive Solutions Lda.",
     author_email="development@hive.pt",
     description="Stripe API Client",
