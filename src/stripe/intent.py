@@ -39,9 +39,11 @@ class IntentAPI(object):
         capture_method=None,
         confirm=None,
         description=None,
+        automatic_payment_methods=None,
         three_d_secure=None,
         return_url=None,
         payment_method_types=[],
+        payment_method_options={},
         metadata={},
     ):
         url = self.base_url + "payment_intents"
@@ -54,6 +56,10 @@ class IntentAPI(object):
             params["confirm"] = confirm
         if description:
             params["description"] = description
+        if not automatic_payment_methods == None:
+            params["automatic_payment_methods[enabled]"] = (
+                "true" if automatic_payment_methods else "false"
+            )
         if three_d_secure:
             params["payment_method_options[card][request_three_d_secure]"] = (
                 three_d_secure
@@ -62,6 +68,9 @@ class IntentAPI(object):
             params["return_url"] = return_url
         for payment_method_type in payment_method_types:
             params["payment_method_types[]"] = payment_method_type
+        for key, value in payment_method_options.items():
+            for _key, _value in value.items():
+                params["payment_method_options[" + key + "][" + _key + "]"] = _value
         for key, value in metadata.items():
             params["metadata[" + key + "]"] = value
         contents = self.post(url, params=params)
@@ -70,4 +79,12 @@ class IntentAPI(object):
     def capture_intent(self, identifier):
         url = self.base_url + "payment_intents/%s/capture" % identifier
         contents = self.post(url)
+        return contents
+
+    def confirm_intent(self, identifier, return_url=None):
+        url = self.base_url + "payment_intents/%s/confirm" % identifier
+        params = {}
+        if return_url:
+            params["return_url"] = return_url
+        contents = self.post(url, params=params)
         return contents
