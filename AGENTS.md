@@ -40,7 +40,7 @@ pytest
 - Tests live in `src/stripe/test` (the `testpaths` of `pytest.ini`, where every `.py` file is collected) and are `unittest.TestCase` classes.
 - The CI workflow runs `pytest` on CPython 2.7 and 3.5 up to the latest release and on PyPy 2.7, 3.6, 3.9 and 3.10, so tests must not rely on Python 3 only features such as `unittest.mock`.
 - Tests must never reach the real Stripe API nor use real keys, replace the HTTP methods of the `API` instance with fakes instead.
-- `python setup.py test`, still run by the CI and deploy workflows, does not collect any test, use `pytest`.
+- `python setup.py test`, still run by the CI workflow on Python 3.8 and older, does not collect any test, use `pytest`.
 
 ## Style Guide
 
