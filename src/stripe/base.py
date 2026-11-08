@@ -77,3 +77,9 @@ class API(
         auth = kwargs.pop("auth", True)
         if auth:
             headers["Authorization"] = "Bearer %s" % self.api_key
+
+    def ping(self):
+        # there's no ping endpoint in Stripe so the balance retrieval
+        # is used instead, a read only call that requires a valid key
+        contents = self.get_balance()
+        return contents
