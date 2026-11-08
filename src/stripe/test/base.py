@@ -30,8 +30,49 @@ __license__ = "Apache License, Version 2.0"
 
 import unittest
 
+import appier
+
+import stripe
+
 
 class BaseTest(unittest.TestCase):
 
+    def setUp(self):
+        self.api = stripe.API(api_key="secret")
+        self.api.request = self._request
+        self.requests = []
+
+    def _request(self, method, url, **kwargs):
+        self.requests.append((method, url, kwargs))
+        return dict(object="balance", livemode=False)
+
+    def _reject(self, method, url, **kwargs):
+        self.requests.append((method, url, kwargs))
+        raise appier.HTTPError(None, code=401, extended=False)
+
     def test_basic(self):
         self.assertEqual(1 + 1, 2)
+
+    def test_ping(self):
+        result = self.api.ping()
+        self.assertEqual(result, dict(object="balance", livemode=False))
+        method, url, kwargs = self.requests[0]
+        self.assertEqual(method, appier.http.get)
+        self.assertEqual(url, "https://api.stripe.com/v1/balance")
+        self.assertEqual(kwargs["headers"], dict(Authorization="Bearer secret"))
+        self.assertEqual(list(kwargs["params"].items()), [])
+
+        # the verification is made against the configured base URL
+        # and using the key that has been provided to the constructor
+        api = stripe.API(base_url="https://stripe.hive.pt/v1/", api_key="other")
+        api.request = self._request
+        api.ping()
+        _method, url, kwargs = self.requests[1]
+        self.assertEqual(url, "https://stripe.hive.pt/v1/balance")
+        self.assertEqual(kwargs["headers"], dict(Authorization="Bearer other"))
+
+        # an invalid (or revoked) key is rejected by Stripe and that
+        # error must reach the caller instead of being silenced
+        self.api.request = self._reject
+        self.assertRaises(appier.HTTPError, self.api.ping)
+        self.assertEqual(len(self.requests), 3)
